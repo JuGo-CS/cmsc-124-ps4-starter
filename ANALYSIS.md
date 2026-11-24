@@ -1,10 +1,109 @@
 # The Search and the Stack
 
-Replace this paragraph after your checks pass. Paste the output of `./trace`
-for one case. Then answer three questions about it.
+== trace P09 ==
+Call: ancestor_r(tom,X)
+  Call: parent(tom,_)
+  Exit: parent(tom,liz)
+  Call: ancestor_r(liz,X)
+    Call: parent(liz,_)
+    Fail: parent(liz,_)
+    Call: parent(liz,X)
+    Fail: parent(liz,X)
+  Fail: ancestor_r(liz,X)
+  Redo: parent(tom,liz)
+  Exit: parent(tom,bob)
+  Call: ancestor_r(bob,X)
+    Call: parent(bob,_)
+    Exit: parent(bob,ann)
+    Call: ancestor_r(ann,X)
+      Call: parent(ann,_)
+      Exit: parent(ann,sue)
+      Call: ancestor_r(sue,X)
+        Call: parent(sue,_)
+        Fail: parent(sue,_)
+        Call: parent(sue,X)
+        Fail: parent(sue,X)
+      Fail: ancestor_r(sue,X)
+      Redo: parent(ann,sue)
+      Fail: parent(ann,_)
+      Call: parent(ann,X)
+      Exit: parent(ann,sue)
+    Exit: ancestor_r(ann,sue)
+  Exit: ancestor_r(bob,sue)
+Exit: ancestor_r(tom,sue)
+answer 1: X=sue
+Redo: ancestor_r(tom,sue)
+  Redo: ancestor_r(bob,sue)
+    Redo: ancestor_r(ann,sue)
+      Redo: parent(ann,sue)
+      Fail: parent(ann,X)
+    Fail: ancestor_r(ann,X)
+    Redo: parent(bob,ann)
+    Exit: parent(bob,pat)
+    Call: ancestor_r(pat,X)
+      Call: parent(pat,_)
+      Exit: parent(pat,jim)
+      Call: ancestor_r(jim,X)
+        Call: parent(jim,_)
+        Fail: parent(jim,_)
+        Call: parent(jim,X)
+        Fail: parent(jim,X)
+      Fail: ancestor_r(jim,X)
+      Redo: parent(pat,jim)
+      Fail: parent(pat,_)
+      Call: parent(pat,X)
+      Exit: parent(pat,jim)
+    Exit: ancestor_r(pat,jim)
+  Exit: ancestor_r(bob,jim)
+Exit: ancestor_r(tom,jim)
+answer 2: X=jim
+Redo: ancestor_r(tom,jim)
+  Redo: ancestor_r(bob,jim)
+    Redo: ancestor_r(pat,jim)
+      Redo: parent(pat,jim)
+      Fail: parent(pat,X)
+    Fail: ancestor_r(pat,X)
+    Redo: parent(bob,pat)
+    Fail: parent(bob,_)
+    Call: parent(bob,X)
+    Exit: parent(bob,ann)
+  Exit: ancestor_r(bob,ann)
+Exit: ancestor_r(tom,ann)
+answer 3: X=ann
+Redo: ancestor_r(tom,ann)
+  Redo: ancestor_r(bob,ann)
+    Redo: parent(bob,ann)
+    Exit: parent(bob,pat)
+  Exit: ancestor_r(bob,pat)
+Exit: ancestor_r(tom,pat)
+answer 4: X=pat
+Redo: ancestor_r(tom,pat)
+  Redo: ancestor_r(bob,pat)
+    Redo: parent(bob,pat)
+    Fail: parent(bob,X)
+  Fail: ancestor_r(bob,X)
+  Redo: parent(tom,bob)
+  Fail: parent(tom,_)
+  Call: parent(tom,X)
+  Exit: parent(tom,liz)
+Exit: ancestor_r(tom,liz)
+answer 5: X=liz
+Redo: ancestor_r(tom,liz)
+  Redo: parent(tom,liz)
+  Exit: parent(tom,bob)
+Exit: ancestor_r(tom,bob)
+answer 6: X=bob
+Redo: ancestor_r(tom,bob)
+  Redo: parent(tom,bob)
+  Fail: parent(tom,X)
+Fail: ancestor_r(tom,X)
+== 6 answers ==
 
 - Which of its lines push a frame onto Activity 15's runtime stack? Which
   lines pop one?
+
+
+  
 - What does a `Redo` line resume that a returned frame cannot?
 - Why does swapping the two clauses of `reach/2` change whether the search
   ever answers, while swapping the two clauses of `ancestor/2` only changes
